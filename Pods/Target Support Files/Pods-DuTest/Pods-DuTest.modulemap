@@ -1,0 +1,6 @@
+framework module Pods_DuTest {
+  umbrella header "Pods-DuTest-umbrella.h"
+
+  export *
+  module * { export * }
+}

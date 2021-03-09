@@ -48,6 +48,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		// to restore the scene back to its current state.
 	}
 
+	
+	func changeRootViewController(_ vc: UIViewController, animated: Bool = true) {
+		guard let window = self.window else {
+			return
+		}
+		
+		// change the rootvc to your VC
+		window.rootViewController = vc
+	}
 
 }
 
