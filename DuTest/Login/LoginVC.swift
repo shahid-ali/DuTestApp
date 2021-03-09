@@ -34,17 +34,21 @@ class LoginVC: UIViewController {
 		setupLogin()
 	}
 	
+	
+	//MARK:observer is bieng setup to monitor value change of email textfield
 	private func setupEmailTF()
 	{
+		//observable from emailTF.rx
 		 validEmailObservable=emailTF.rx.text
 			.observeOn(MainScheduler.asyncInstance)
 			.throttle(RxTimeInterval.microseconds(500), scheduler: MainScheduler.instance)
 			.unwrap()
 			.map{[weak self] in
-				return self?.viewModel.isEmailValid(email: $0)}
+				return self?.viewModel.isEmailValid(email: $0)} //call emailvalidation from vm
 			.unwrap()
 		.distinctUntilChanged()
 		.share(replay:1)
+		
 		
 		validEmailObservable?.subscribe({
 			print($0)
@@ -52,14 +56,16 @@ class LoginVC: UIViewController {
 		
 	}
 	
+	//MARK:observer is bieng setup to monitor value change of password textfield
 	private func setupPasswordTF()
 	{
+		//observable from passwordTF.rx
 		 validPasswordObservable=passwordTF.rx.text
 			.observeOn(MainScheduler.asyncInstance)
 			.throttle(RxTimeInterval.microseconds(500), scheduler: MainScheduler.instance)
 			.unwrap()
 			.map{[weak self] in
-				return self?.viewModel.isValidPassword(password:$0)}
+				return self?.viewModel.isValidPassword(password:$0)} //call isvalidpassword from vm
 			.unwrap()
 		.distinctUntilChanged()
 		.share(replay:1)
@@ -70,24 +76,32 @@ class LoginVC: UIViewController {
 		
 	}
     
+	
+	//MARK:setupLogin
 	private func setupLogin()
 	{
 		guard let validEmailObservable=validEmailObservable,
 			  let validPasswordobservable=validPasswordObservable
 			else {return}
 		
+		
+		//combine obseravable to monitor change in email & password observer
 		let everythingValid:Observable<Bool>=Observable.combineLatest(validEmailObservable,validPasswordobservable){first,second in
 			return first && second
 		}.share(replay:1)
 		
+		//change login button background color according to value recieved from combine observable
 		everythingValid.bind(onNext: {[weak self] in
 			self?.loginBtn.backgroundColor=($0==true ? UIColor.red:UIColor.lightGray)
 		}).disposed(by:disposeBag)
 		
+		//enable/disable login button according to the value received from combile observable
 		everythingValid.bind(to:loginBtn.rx.isEnabled)
 		.disposed(by:disposeBag)
 		
 		
+		
+		//if login button is enabled, open the home screen scene
 		loginBtn
 		.rx
 		.tap
