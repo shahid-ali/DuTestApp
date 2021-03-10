@@ -57,7 +57,7 @@ class FavVC: UIViewController {
 			 }.disposed(by:disposeBag)
 			  
 			 //when tablecell is selected
-			 tableView.rx.modelSelected(Post.self)
+			 tableView.rx.modelSelected(FavPost.self)
 			 .subscribe(onNext: { item in
 			 }).disposed(by: self.disposeBag)
 		 }
