@@ -29,6 +29,9 @@ class LoginVC: UIViewController {
 	override func viewDidLoad() {
         super.viewDidLoad()
 		
+		emailTF.text="test@test.com"
+		passwordTF.text="12345678"
+		
 		setupEmailTF()
 		setupPasswordTF()
 		setupLogin()

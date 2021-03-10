@@ -8,19 +8,21 @@
 
 
 import RxSwift
+import RxCocoa
+
 
 //MARK:CommonViewModel will contain common functions and properties across the view models
 class CommonViewModel {
 
-	private var indicatorPS=PublishSubject<Bool>()
-	func getActivityIndicatorPS() -> PublishSubject<Bool>
+	private let showLoading = BehaviorRelay<Bool>(value: true)
+	func getActivityIndicatorBR() -> BehaviorRelay<Bool>
 	{
-	return indicatorPS
+	return showLoading
 	}
 	
 	func setIndicatorPSValue(value:Bool)
 	{
-		indicatorPS.onNext(value)
+		showLoading.accept(value)
 	}
 	
 }

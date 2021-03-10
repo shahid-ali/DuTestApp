@@ -10,15 +10,29 @@ import UIKit
 
 class PostCell: UITableViewCell {
 
-    override func awakeFromNib() {
+	@IBOutlet weak var titleLbl: UILabel!
+	@IBOutlet weak var bodyLbl: UILabel!
+	
+	override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+	}
+	
+	
+	//MARK:set values for tableview cell
+	func setDataToView(itemData : Post) {
+		titleLbl.text=itemData.title
+		bodyLbl.text=itemData.body
+	}
+	
+	//MARK:set values for tableview cell
+	func setFavDataToView(itemData : FavPost) {
+		titleLbl.text=itemData.title
+		bodyLbl.text=itemData.body
+	}
     
 }

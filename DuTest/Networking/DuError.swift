@@ -6,8 +6,18 @@
 //  Copyright © 2021 Shahid. All rights reserved.
 //
 
-import UIKit
 
-class DuError: NSObject {
-
+public enum DuError: Error {
+	
+	// MARK: - Internal errors
+    case noInternet
+    
+    // MARK: - API errors
+    case badAPIRequest
+    
+    // MARK: - Auth errors
+    case unauthorized
+    
+    // MARK: - Unknown errors
+    case unknown
 }
